@@ -1,83 +1,69 @@
+# React + TypeScript + Vite
 
-# TimeCraft AI ✨
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**Turning timetable chaos into clarity.**
+Currently, two official plugins are available:
 
-TimeCraft AI is a web application designed to help colleges and teacher-education institutes in India automatically generate conflict-free, optimized academic timetables aligned with the NEP-2020 framework.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Our mission: **Save hours of manual scheduling, ensure fair faculty load, and give students a seamless academic journey.**
+## Expanding the ESLint configuration
 
----
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## 🚀 Features
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-### Intelligent Scheduling Engine
-- Accepts structured inputs:
-	- Student elective choices
-	- Credit hours for each course
-	- Full curriculum structure (core/electives/labs for FYUP, B.Ed., M.Ed., ITEP)
-	- Faculty availability and workload
-	- Room/lab capacities & equipment
-	- Internships / teaching practice / fieldwork slots
-- Produces semester-wise timetables with zero clashes
-- "What-if" simulations (add courses, adjust credits)
-- Manual editing with instant clash detection
-- Scales for new courses and policy updates
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-### Exports & Integrations
-- Export timetables in PDF and Excel
-- Hooks for Academic Management Systems
-
-### User Roles & Dashboards
-- **Admin:** upload datasets, configure constraints, generate and approve schedules
-- **Faculty:** view personal teaching slots, block/unblock availability
-- **Students:** view personalized timetable (read-only on mobile)
-- Quick stats: total classes, clashes solved, faculty utilization %
-
-### UI / UX
-- Clean dashboard with calendar & table views
-- Drag-and-drop editing of slots with smooth animations
-- Responsive for desktop & tablet (mobile is view-only)
-- Calming blues & mint greens, generous white space, rounded cards, friendly Material icons
-
-### Stretch Ideas (optional)
-- Recommend optimal electives based on capacity/history
-- Visual faculty load heatmaps
-- Push notifications for changes
-
----
-
-## 🛠 Tech Stack
-
-- **Frontend:** React + Tailwind CSS or Material UI
-- **Backend:** Node.js (Express) or Django
-- **Database:** MongoDB or PostgreSQL
-- **AI Engine:** Python with OR-Tools / constraint solver, using JSON for data exchange
-
----
-
-## 💫 Brand & Tone
-
-- **Name:** TimeCraft AI
-- **Tagline:** Turning timetable chaos into clarity.
-- **Style:** Approachable, modern, optimistic
-- **Goal:** Empower faculty and students, not just automate bureaucracy
-
-Every interaction reassures users that complex timetables can be solved with calm intelligence.
-
----
-
-## Development
-
-This project uses [React](https://react.dev/) and [Vite](https://vitejs.dev/) for a fast, modern development experience.
-
-To get started:
-
-```bash
-pnpm install
-pnpm dev
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-**Let’s build a tool that makes academic scheduling effortless, fair, and empowering!**
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
