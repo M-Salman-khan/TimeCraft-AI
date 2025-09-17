@@ -2,12 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Progress } from './ui/progress';
 import { Badge } from './ui/badge';
 import { 
-  TrendingUp, 
-  Clock, 
-  Users, 
-  Calendar,
+  TrendingUp,
   CheckCircle,
-  AlertTriangle,
   BookOpen,
   MapPin
 } from 'lucide-react';

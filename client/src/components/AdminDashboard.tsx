@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { Progress } from './ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { TimetableGenerator } from './TimetableGenerator';
 import { TimetableEditor } from './TimetableEditor';
@@ -12,9 +11,7 @@ import {
   Calendar, 
   Users, 
   BookOpen, 
-  Clock, 
   CheckCircle, 
-  AlertTriangle,
   Zap,
   Download,
   Upload,

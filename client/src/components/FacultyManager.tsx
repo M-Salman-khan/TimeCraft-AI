@@ -5,6 +5,7 @@ import { Badge } from './ui/badge';
 import { Progress } from './ui/progress';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Input } from './ui/input';
+
 import { 
   Users, 
   Search, 
@@ -36,7 +37,6 @@ interface Faculty {
 
 export function FacultyManager() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);
 
   const mockFaculty: Faculty[] = [
     {
