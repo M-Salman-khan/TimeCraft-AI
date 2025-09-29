@@ -1,38 +1,23 @@
-name: Deploy to Firebase Hosting (production)
-
+name: Deploy to Firebase Hosting on merge
 on:
   push:
     branches:
       - main
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js and pnpm
-        uses: actions/setup-node@v4
+      # Go into client folder and build
+      - run: |
+          cd client
+          pnpm install
+          pnpm run build
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Enable pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
-
-      - name: Install dependencies (client)
-        run: pnpm install
-        working-directory: ./client
-
-      - name: Build client
-        run: pnpm build
-        working-directory: ./client
-
-      - name: Deploy to Firebase Hosting (production)
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          projectId: "${{ secrets.FIREBASE_PROJECT_ID }}"
-        # firebase.json at repo root already points "public": "client/dist"
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIMECRAFT_TIMETABLE_AI }}
+          channelId: live
+          projectId: timecraft-timetable-ai
