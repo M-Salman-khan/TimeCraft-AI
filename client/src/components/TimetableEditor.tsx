@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import initialSchedule from '@/data/schedule.json';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -58,46 +59,7 @@ export function TimetableEditor() {
   const [dragOverSlot, setDragOverSlot] = useState<string | null>(null);
   const [editingSlot, setEditingSlot] = useState<TimeSlot | null>(null);
   const [conflicts, setConflicts] = useState<ConflictInfo[]>([]);
-  const [schedule, setSchedule] = useState<DaySchedule[]>([
-    {
-      day: 'Monday',
-      slots: [
-        { id: 'mon-1', time: '9:00-10:00', subject: 'Educational Psychology', faculty: 'Dr. Sharma', room: 'Room 101', type: 'core', students: 55, capacity: 50 },
-        { id: 'mon-2', time: '9:00-10:00', subject: 'Pedagogy of English', faculty: 'Dr. Sharma', room: 'Room 101', type: 'core', students: 40, capacity: 45 },
-        { id: 'mon-3', time: '11:30-12:30', subject: 'ICT Lab', faculty: 'Mr. Singh', room: 'Computer Lab', type: 'lab', students: 20, capacity: 25 },
-        { id: 'mon-4', time: '2:00-3:00', subject: 'Elective: Art Education', faculty: 'Ms. Gupta', room: 'Art Room', type: 'elective', students: 25, capacity: 30 },
-      ]
-    },
-    {
-      day: 'Tuesday',
-      slots: [
-        { id: 'tue-1', time: '9:00-10:00', subject: 'Philosophy of Education', faculty: 'Dr. Patel', room: 'Room 103', type: 'core', students: 45, capacity: 50 },
-        { id: 'tue-2', time: '10:00-11:00', subject: 'Teaching Practice', faculty: 'Prof. Kumar', room: 'Room 101', type: 'practical', students: 45, capacity: 50 },
-        { id: 'tue-3', time: '11:30-12:30', subject: 'Mathematics Pedagogy', faculty: 'Dr. Reddy', room: 'Room 104', type: 'core', students: 30, capacity: 35 },
-      ]
-    },
-    {
-      day: 'Wednesday',
-      slots: [
-        { id: 'wed-1', time: '9:00-10:00', subject: 'Child Development', faculty: 'Dr. Sharma', room: 'Room 101', type: 'core', students: 45, capacity: 50 },
-        { id: 'wed-2', time: '10:00-11:00', subject: 'Science Laboratory', faculty: 'Prof. Verma', room: 'Science Lab', type: 'lab', students: 20, capacity: 24 },
-        { id: 'wed-3', time: '11:30-12:30', subject: 'Elective: Music Education', faculty: 'Ms. Joshi', room: 'Music Room', type: 'elective', students: 15, capacity: 20 },
-      ]
-    },
-    {
-      day: 'Thursday',
-      slots: [
-        { id: 'thu-1', time: '9:00-10:00', subject: 'Assessment & Evaluation', faculty: 'Dr. Patel', room: 'Room 103', type: 'core', students: 45, capacity: 50 },
-        { id: 'thu-2', time: '10:00-11:00', subject: 'Language Across Curriculum', faculty: 'Prof. Kumar', room: 'Room 102', type: 'core', students: 40, capacity: 45 },
-      ]
-    },
-    {
-      day: 'Friday',
-      slots: [
-        { id: 'fri-1', time: '9:00-10:00', subject: 'School Experience', faculty: 'All Faculty', room: 'Various Schools', type: 'practical', students: 45, capacity: 50 },
-      ]
-    }
-  ]);
+  const [schedule, setSchedule] = useState<DaySchedule[]>(initialSchedule as unknown as DaySchedule[]);
 
   const [history, setHistory] = useState<DaySchedule[][]>([]);
   const [showConflictsOnly, setShowConflictsOnly] = useState(false);
@@ -130,7 +92,7 @@ export function TimetableEditor() {
   const isSlotConflicted = (slotId: string) => {
     return conflicts.some(conflict => conflict.affectedSlots.includes(slotId));
   };
-
+  
   const getConflictInfo = (slotId: string) => {
     return conflicts.find(conflict => conflict.affectedSlots.includes(slotId));
   };
